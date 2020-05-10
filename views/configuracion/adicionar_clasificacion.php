@@ -62,14 +62,11 @@ $clasificaciones = DatabaseConnection::getQueryBuilder()
                         <label>Nombre:</label>
                         <input name="nombre" type="text" class="form-control" class="required">
                     </div>
-                    <div class="form-group form-group-default">
-                        <label>Cantidad de días:</label>
-                        <input name="cant_dias" type="text" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label class="pl-1 mb-0 mt-1">Categoría superior</label>
-                        <div class="radio radio-success my-0">
-                            <select class="cod_padre" name="cod_padre" id="cod_padre" style="width:200px">
+                    
+                    <div id="capa_cod_padre" class="form-group form-group-default">
+                        <label>Categoría superior</label>
+                        <div class="my-0">
+                            <select class="cod_padre full-width" name="cod_padre" id="cod_padre">
                               <option value="0">Categoría principal</option>
                             <?=
                               $opciones = '';
@@ -83,15 +80,35 @@ $clasificaciones = DatabaseConnection::getQueryBuilder()
                         </div>
                     </div>
                     
+                    <div id="capa_cant_dias" class="form-group form-group-default" style="display: none;">
+                        <label>Cantidad de días:</label>
+                        <input id="cant_dias" name="cant_dias" type="text" class="form-control">
+                    </div>
+                    
+                    <div id="capa_tipo_dias" class="form-group form-group-default" style="display: none;">
+                        <label>Tipo de días:</label>
+                        <div class="my-0">
+                          <select class="full-width" name="tipo_dias" id="tipo_dias">
+                            <option value="1">Días calendario</option>
+                            <option value="2">Días hábiles</option>
+                          </select>
+                        </div>
+                    </div>
+                    
                     <div class="row" id="input">
-              <div class="col-12">
-                  <div class="form-group form-group-default">
-                      <label>Puede buscar y elegir a los usuarios</label>
-                      <select class="full-width" data-init-plugin="select2" multiple id="responsables" name="responsables"></select>
-                      <input type='hidden' name="responsables_json">
-                  </div>
-              </div>
-          </div>
+                        <div class="col-12">
+                            <div class="form-group form-group-default">
+                                <label>Responsable de la categoría</label>
+                                <select class="full-width" data-init-plugin="select2" multiple id="responsables" name="responsables"></select>
+                                <input type='hidden' name="responsables_json">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="capa_descripcion" class="form-group form-group-default">
+                        <label>Descripción:</label>
+                        <textarea id="descripcion" name="descripcion" class="form-control"></textarea>
+                    </div>
                     
                     <div class="form-group">
                         <label class="pl-1 mb-0 mt-1">Estado</label>
@@ -113,7 +130,7 @@ $clasificaciones = DatabaseConnection::getQueryBuilder()
     </script>
     <script>
     $(document).ready(function(){
-      $("#cod_padre").select2();
+      $("#cod_padre,#tipo_dias").select2();
     });
     </script>
 </body>

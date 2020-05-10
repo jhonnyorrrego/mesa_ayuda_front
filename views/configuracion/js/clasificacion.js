@@ -10,13 +10,30 @@ $(function() {
     
     $("#cod_padre").change(function(){
     	var x_valor = $(this).val();
-    	if(x_valor == 0){
+    	
+    	if(x_valor == 0){//Si no se ha seleccionado un padre
     		$("#input").show();
-    	} else if(x_valor > 0){
+    		$("#capa_cant_dias").hide();
+    		$("#cant_dias").val("");
+    		$("#cant_dias").removeClass("required");
+    		
+    		$("#capa_tipo_dias").hide();
+    		$("#tipo_dias").val("");
+    		$("#tipo_dias").removeClass("required");
+    		
+    	} else if(x_valor > 0){//Si se selecciono una clasificacion padre.
     		$("#input").hide();
     		$("#responsables").val('');
     		$("#responsables_json").val('');
     		$("#responsables").trigger('change');
+    		
+    		$("#capa_cant_dias").show();
+    		$("#capa_cant_dias").addClass("required");
+    		$("#cant_dias").addClass("required");
+    		
+    		$("#capa_tipo_dias").show();
+    		$("#capa_tipo_dias").addClass("required");
+    		$("#tipo_dias").addClass("required");
     	}
     });
     
@@ -122,7 +139,7 @@ $(function() {
     	}
     	
     	$.each(arrayJson, function(index, value){
-    		var option = new Option(value.nombre, data.id, true, true);
+    		var option = new Option(value.nombre, value.id, true, true);
     		responsables.append(option).trigger('change');
     	});
     	
