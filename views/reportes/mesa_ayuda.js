@@ -1,5 +1,6 @@
 $(document).ready(function() {
     let baseUrl = $("script[data-baseurl]").data("baseurl");
+    $('#opciones_tickets').select2();
     
     $(document).on("change", ".clasificacion", function(){
     	var elemento = $(this);
