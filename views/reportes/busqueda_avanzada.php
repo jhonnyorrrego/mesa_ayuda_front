@@ -38,11 +38,10 @@ $baseUrl = "../../";
                             <div class="form-group form-group-default input-group">
                                 <div class="form-input-group">
                                     <label>Fecha inicial:</label>
-                                    <input type="hidden" name="bqCondicional_a@fecha_x" id="bqCondicional_a@fecha_x" value=">=">
-                                    <input type="text" class="form-control" name="bqCampo_a@fecha_x" id="initial_date">
-                                    <input type="hidden" name="bqComparador_a@fecha_x" id="bqsaiaenlace_a@fecha_x" value="y" />
+                                    <input type="text" class="form-control" name="bqCampo_fecha_x" id="initial_date">
+                                    <input type="hidden" name="bqComparador_fecha_x" value="y" />
                                     
-                                    <input name="bqTipo_a@fecha_x" type="hidden" value="date">
+                                    <input name="bqTipo_fecha_x" type="hidden" value="date">
                                 </div>
                                 <div class="input-group-append ">
                                     <span class="input-group-text"><i class="fa fa-calendar"></i></span>
@@ -53,11 +52,7 @@ $baseUrl = "../../";
                             <div class="form-group form-group-default input-group">
                                 <div class="form-input-group">
                                     <label>Fecha final:</label>
-                                    <input type="hidden" name="bqCondicional_a@fecha_y" id="bqCondicional_a@fecha_y" value="<=">
-                                    <input type="text" class="form-control" name="bqCampo_a@fecha_y" id="final_date">
-                                    <input type="hidden" name="bqComparador_a@fecha_y" id="bqsaiaenlace_a@fecha_y" value="y" />
-                                    
-                                    <input name="bqTipo_a@fecha_y" type="hidden" value="date">
+                                    <input type="text" class="form-control" name="fecha_y" id="final_date">
                                 </div>
                                 <div class="input-group-append ">
                                     <span class="input-group-text"><i class="fa fa-calendar"></i></span>
@@ -82,6 +77,7 @@ $baseUrl = "../../";
                     
 
                     <div class="form-actions">
+                        <input type="hidden" name="bqtipodato" value="date|fecha_x,fecha_y">
                         <input type="hidden" id="variable_busqueda" name="variable_busqueda">
                         <input type="hidden" name="idbusqueda_componente" id="component" value="<?= $_REQUEST['idbusqueda_componente'] ?>">
                     </div>

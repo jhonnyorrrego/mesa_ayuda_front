@@ -17,11 +17,7 @@ $(document).ready(function() {
             clasificacion: x_valor,
             idft_mesa_ayuda : x_idFtMesaAyuda
         },
-    		success: function(response) {
-          if(response.success){
-          	elemento.parent().parent().hide();
-          }
-          
+    		success: function(response) {          
         	let typeMessage = "success";
 
           if (!response.success) {
@@ -32,7 +28,66 @@ $(document).ready(function() {
               message: response.message
           });
           
+          if(response.success){
+          	location.reload();
+          }
         }
     	});
+    });
+    
+    $(document).on('click','.crear_tarea',function(){
+      var iddocumento = $(this).attr("iddocumento");
+      let options = {
+          url: `views/tareas/crear.php`,
+          title: 'Tarea',
+          params: {
+              documentId: iddocumento,
+              className: 'Saia\\MesaAyuda\\formatos\\mesa_ayuda\\FtMesaAyudaTarea'
+          },
+          centerAlign: false,
+          size: "modal-lg",
+          buttons: {},
+          afterHide: function() {
+              $('#table').bootstrapTable("refresh");
+          }
+      };
+
+      top.topModal(options);
+    });
+    
+    $(document).on('change','#opciones_tickets',function(){
+    		var valor = $(this).val();
+    		var ruta = $('option:selected', this).attr('ruta');
+    		
+    		window.open(baseUrl + ruta,'_self');
+    });
+    
+    $(document).on('click','.show_task',function(){
+      var iddocumento = $(this).attr("iddocumento");
+      
+      let options = {
+            url: `views/tareas/lista_documento.php`,
+            params: {
+                documentId: iddocumento
+            },
+            title: 'Tareas del documento',
+            size: 'modal-lg',
+            buttons: {
+                cancel: {
+                    label: 'Cerrar',
+                    class: 'btn btn-danger'
+                }
+            },
+            afterHide: function () {
+                findCounters();
+            }
+        };
+        top.topModal(options);
+    });
+    
+    $(document).on('click','.reclasificar',function(){
+      var iddocumento = $(this).attr("iddocumento");
+      
+      $(".capaReclasifica" + iddocumento).show();
     });
 }); //FIN IF documento.ready
