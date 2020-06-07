@@ -9,6 +9,8 @@ while ($max_salida > 0) {
     $max_salida--;
 }
 
+use Doctrine\DBAL\Types\Type;
+use Saia\core\DatabaseConnection;
 use Saia\models\busqueda\BusquedaComponente;
 use Saia\MesaAyuda\formatos\mesa_ayuda\FtMesaAyuda;
 
@@ -23,33 +25,61 @@ function opciones_tickets($datos)
     $seleccionadoProceso = "";
     $seleccionadoTerminado = "";
     
+    $nombreComponentePendiente = 'tickets_pendientes';
+    $nombreComponenteProceso = 'tickets_proceso';
+    $nombreComponenteTerminado = 'tickets_terminado';
+    
     $estadoPendiente = FtMesaAyuda::ESTADO_PENDIENTE;
     $estadoProceso = FtMesaAyuda::ESTADO_PROCESO;
     $estadoTerminado = FtMesaAyuda::ESTADO_TERMINADO;
     
     $BusquedaComponente = new BusquedaComponente($datos['idbusqueda_componente']);
-    $nombre_componente = $BusquedaComponente->nombre;
+    $nombreComponente = $BusquedaComponente -> nombre;
     $idBusquedaComponente = $datos['idbusqueda_componente'];
     
+    if($nombreComponente == $nombreComponentePendiente){
+      $estadoSeleccionado = $estadoPendiente;
+    } else if($nombreComponente == $nombreComponenteProceso){
+      $estadoSeleccionado = $estadoProceso;
+    } else if($nombreComponente == $nombreComponenteTerminado){
+      $estadoSeleccionado = $estadoTerminado;
+    }
+    
+    $componentePendiente = DatabaseConnection::getQueryBuilder()
+        ->select('idbusqueda_componente')
+        ->from('busqueda_componente')
+        ->where('nombre = :nombre_componente')
+        ->setParameter(':nombre_componente',$nombreComponentePendiente)
+        ->execute()->fetchAll();
     $params1=http_build_query([
-      'idbusqueda_componente'=>$idBusquedaComponente,
-      'variable_busqueda'=>'{"estado":"' . $estadoPendiente . '"}'
+      'idbusqueda_componente'=>$componentePendiente[0]["idbusqueda_componente"]/*,
+      'variable_busqueda'=>'{"estado":"' . $estadoPendiente . '"}'*/
     ]);
     $url1 = "views/buzones/grilla.php?".$params1;
     
+    $componenteProceso = DatabaseConnection::getQueryBuilder()
+        ->select('idbusqueda_componente')
+        ->from('busqueda_componente')
+        ->where('nombre = :nombre_componente')
+        ->setParameter(':nombre_componente',$nombreComponenteProceso)
+        ->execute()->fetchAll();
     $params2=http_build_query([
-      'idbusqueda_componente'=>$idBusquedaComponente,
-      'variable_busqueda'=>'{"estado":"' . $estadoProceso . '"}'
+      'idbusqueda_componente'=>$componenteProceso[0]["idbusqueda_componente"]
     ]);
     $url2 = "views/buzones/grilla.php?".$params2;
     
+    $componenteTerminado = DatabaseConnection::getQueryBuilder()
+        ->select('idbusqueda_componente')
+        ->from('busqueda_componente')
+        ->where('nombre = :nombre_componente')
+        ->setParameter(':nombre_componente',$nombreComponenteTerminado)
+        ->execute()->fetchAll();
     $params3=http_build_query([
-      'idbusqueda_componente'=>$idBusquedaComponente,
-      'variable_busqueda'=>'{"estado":"' . $estadoTerminado . '"}'
+      'idbusqueda_componente'=>$componenteTerminado[0]["idbusqueda_componente"]
     ]);
     $url3= "views/buzones/grilla.php?".$params3;
     
-    $estadoSeleccionado = @json_decode($_REQUEST["variable_busqueda"],true)['estado'];
+    //$estadoSeleccionado = @json_decode($_REQUEST["variable_busqueda"],true)['estado'];
     if($estadoSeleccionado == $estadoPendiente){
         $seleccionadoPendiente = 'selected';
     } else if($estadoSeleccionado == $estadoProceso){
