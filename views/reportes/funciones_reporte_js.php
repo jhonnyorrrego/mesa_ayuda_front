@@ -100,7 +100,16 @@ function opciones_tickets($datos)
     return $cadena_acciones;
 }
 ?>
+<style>
+.dropdown2:hover>.dropdown-menu {
+  display: block;
+}
 
+.dropdown2>.dropdown-toggle:active {
+  /*Without this, clicking will make it sticky*/
+    pointer-events: none;
+}
+</style>
 <script data-baseurl='<?= $rootPath ?>'>
     $(function() {
         $.getScript($('script[data-baseurl]').data('baseurl') + 'views/modules/mesa_ayuda/views/reportes/mesa_ayuda.js');
