@@ -2,8 +2,9 @@
 $max_salida = 6;
 $rootPath = $ruta = "";
 while ($max_salida > 0) {
-    if (is_file($ruta . "sw.js")) {
+    if (is_file($ruta . "index.php")) {
         $rootPath = $ruta;
+        break;
     }
     $ruta .= "../";
     $max_salida--;
@@ -18,6 +19,8 @@ include_once $rootPath . "app/vendor/autoload.php";
 include_once $rootPath . "views/assets/librerias.php";
 
 echo select2();
+
+$paramsMesa = json_encode($_REQUEST);
 
 function opciones_tickets($datos)
 {
@@ -110,8 +113,12 @@ function opciones_tickets($datos)
     pointer-events: none;
 }
 </style>
-<script data-baseurl='<?= $rootPath ?>'>
-    $(function() {
-        $.getScript($('script[data-baseurl]').data('baseurl') + 'views/modules/mesa_ayuda/views/reportes/mesa_ayuda.js');
+<script id="external_script" src="<?= $rootPath ?>views/modules/mesa_ayuda/views/reportes/mesa_ayuda.js" data-params='<?= $paramsMesa ?>'></script>
+<script>
+
+    $(document).ready(function(){
+        var alto = $(document).height();
+        $("#content").height(alto-110);
+        $("#table").bootstrapTable('resetView');
     });
 </script>

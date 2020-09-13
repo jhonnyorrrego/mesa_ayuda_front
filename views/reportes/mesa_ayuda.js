@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    let baseUrl = $("script[data-baseurl]").data("baseurl");
+    let baseUrl = localStorage.getItem('baseUrl');
     $('#opciones_tickets').select2();
     
     $(document).on("change", ".clasificacion", function(){

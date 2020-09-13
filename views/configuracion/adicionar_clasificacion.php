@@ -1,21 +1,23 @@
 <?php
-use Saia\core\DatabaseConnection;
-
 $max_salida = 10;
 $rootPath = $ruta = "";
 while ($max_salida > 0) {
-    if (is_file($ruta . "sw.js")) {
+    if (is_file($ruta . "index.php")) {
         $rootPath = $ruta;
+        break;
     }
     $ruta .= "../";
     $max_salida--;
 }
+
+use Saia\core\DatabaseConnection;
+
 include_once $rootPath . "app/vendor/autoload.php";
 include_once $rootPath . "views/assets/librerias.php";
 
-fancyTree();
+$rootPath2 = "../../";
 
-$rootPath2 = '../../';
+fancyTree();
 
 if (empty($_REQUEST['id'])) {
     $_REQUEST['id'] = '';
@@ -40,6 +42,8 @@ $clasificaciones = DatabaseConnection::getQueryBuilder()
         ->where('estado=1')
         ->andWhere('cod_padre=0')
         ->execute()->fetchAll();
+        
+
 ?>
 <!doctype html>
 <html lang="en">
