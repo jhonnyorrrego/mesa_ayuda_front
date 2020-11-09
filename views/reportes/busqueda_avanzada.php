@@ -11,6 +11,8 @@ while ($max_salida > 0) {
 }
 
 include_once $rootPath . "views/assets/librerias.php";
+
+$rootPath = "../../";
 ?>
 <!DOCTYPE html>
 <html>
@@ -86,7 +88,7 @@ include_once $rootPath . "views/assets/librerias.php";
     </div>
     <?= select2() ?>
     <?= dateTimePicker() ?>
-    <script src="<?= $baseUrl ?>views/modules/mesa_ayuda/views/reportes/busqueda_avanzada.js" data-baseurl="<?= $baseUrl ?>"></script>
+    <script src="<?= $rootPath ?>views/modules/mesa_ayuda/views/reportes/busqueda_avanzada.js" data-baseurl="<?= $rootPath ?>"></script>
 </body>
 
 </html>

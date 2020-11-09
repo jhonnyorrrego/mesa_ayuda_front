@@ -18,8 +18,13 @@ $(function () {
     });
 
     $('#btn_success').on('click', function () {
+    		let request = $("#formulario_ticket").serialize() + "&" + $.param({
+            key: localStorage.getItem('key'),
+            token: localStorage.getItem('token'),
+        });
+    		
         $.post(`${baseUrl}app/busquedas/procesa_filtro_busqueda.php`,
-            $("#formulario_ticket").serialize(),
+            request,
             function (data) {
                 if (data.exito) {
                     top.successModalEvent(data);

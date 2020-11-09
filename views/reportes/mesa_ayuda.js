@@ -79,7 +79,7 @@ $(document).ready(function() {
                 }
             },
             afterHide: function () {
-                findCounters();
+                
             }
         };
         top.topModal(options);
